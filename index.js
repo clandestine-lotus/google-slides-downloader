@@ -26,7 +26,7 @@ var recurse = function (collection) {
   return result;
 };
 
-module.exports = function (googleOutput) {
+exports.get = function (googleOutput) {
   var dom = htmlparser.parseDOM(googleOutput);
   return recurse(dom);
 }

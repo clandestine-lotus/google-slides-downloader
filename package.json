@@ -1,24 +1,23 @@
 {
-  "name": "presentation-creator",
+  "name": "google-slides-downloader",
   "version": "1.0.0",
-  "description": "",
-  "main": "rawSvgGetter.js",
+  "description": "Takes raw html from Google Slides embedded presentation and outputs array with an SVG for each slide",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bjarkestaun/presentation-creator.git"
+    "url": "git+https://github.com/bjarkestaun/google-slides-downloader.git"
   },
-  "author": "",
+  "author": "Clandestine Lotus",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bjarkestaun/presentation-creator/issues"
+    "url": "https://github.com/bjarkestaun/google-slides-downloader/issues"
   },
-  "homepage": "https://github.com/bjarkestaun/presentation-creator#readme",
+  "homepage": "https://github.com/bjarkestaun/google-slides-downloader#readme",
   "dependencies": {
     "htmlparser2": "^3.9.0",
-    "lodash": "^3.10.1",
     "underscore": "^1.8.3"
   }
 }
