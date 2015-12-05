@@ -1,6 +1,6 @@
 {
   "name": "google-slides-downloader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Takes raw html from Google Slides embedded presentation and outputs array with an SVG for each slide",
   "main": "index.js",
   "scripts": {
