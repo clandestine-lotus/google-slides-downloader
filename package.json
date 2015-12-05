@@ -1,0 +1,24 @@
+{
+  "name": "presentation-creator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rawSvgGetter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjarkestaun/presentation-creator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bjarkestaun/presentation-creator/issues"
+  },
+  "homepage": "https://github.com/bjarkestaun/presentation-creator#readme",
+  "dependencies": {
+    "htmlparser2": "^3.9.0",
+    "lodash": "^3.10.1",
+    "underscore": "^1.8.3"
+  }
+}
