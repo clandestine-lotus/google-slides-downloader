@@ -15,7 +15,8 @@ var recurse = function (collection) {
         var startIndex = svgScript.indexOf('\n  SK_svgData = \'') + 17;
         var endIndex = svgScript.indexOf(';', startIndex) - 1;
         var svgData = svgScript.substring(startIndex, endIndex);
-        result.push(svgData);
+        var svg = eval('"' + svgData + '"');
+        result.push(svg);
       }
     }
     if (collection.children) {
@@ -29,9 +30,3 @@ module.exports = function (googleOutput) {
   var dom = htmlparser.parseDOM(googleOutput);
   return recurse(dom);
 }
-
-// fs.readFile('google-output.html', 'utf8', function (err, data) {
-//   var dom = htmlparser.parseDOM(data);
-//   var res = recurse(dom);
-//   console.log(res);
-// });
