@@ -9,44 +9,29 @@ var recurse = function (collection) {
       result = result.concat(recurse(element));
     });
   } else {
-    if (collection.type === 'script') {
-      result.push(collection);
+    if (collection.type === 'script' && collection.children[0] && collection.children[0].data) {
+      var svgScript = collection.children[0].data;
+      if (svgScript.indexOf('\n  SK_svgData = \'') > -1) {
+        var startIndex = svgScript.indexOf('\n  SK_svgData = \'') + 17;
+        var endIndex = svgScript.indexOf(';', startIndex) - 1;
+        var svgData = svgScript.substring(startIndex, endIndex);
+        result.push(svgData);
+      }
+    }
+    if (collection.children) {
+      result = result.concat(recurse(collection.children));
     }
   }
   return result;
 };
+
+module.exports = function (googleOutput) {
+  var dom = htmlparser.parseDOM(googleOutput);
+  return recurse(dom);
+}
 
 // fs.readFile('google-output.html', 'utf8', function (err, data) {
 //   var dom = htmlparser.parseDOM(data);
 //   var res = recurse(dom);
 //   console.log(res);
 // });
-
-var testObj = [
-  [
-    {
-      type: 'script',
-      hello: 'abc',
-      abi: 1
-    },
-    {
-      type: 'script',
-      hello: 'def',
-      abi: 1
-    },
-  ],
-  {
-    type: 'somethignelse',
-    hello: 'ghi',
-    abi: 1
-  },
-  [
-    {
-      type: 'script',
-      hello: 'jkl'
-    }
-  ]
-];
-
-var sth = recurse(testObj);
-console.log(sth);
