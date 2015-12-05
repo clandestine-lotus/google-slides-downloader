@@ -4,7 +4,7 @@
   "description": "Takes raw html from Google Slides embedded presentation and outputs array with an SVG for each slide",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/unitTests.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,10 @@
   "dependencies": {
     "htmlparser2": "^3.9.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2"
   }
 }
