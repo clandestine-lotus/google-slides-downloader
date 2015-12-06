@@ -1,46 +1,26 @@
 var rp = require('request-promise');
 var htmlparser = require("htmlparser2");
-var _ = require('underscore');
-
-var recurse = function (collection) {
-  var result = [];
-  if (Array.isArray(collection)) {
-    _.each(collection, function (element) {
-      result = result.concat(recurse(element));
-    });
-  } else {
-    if (collection.type === 'script' && collection.children[0] && collection.children[0].data) {
-      var svgScript = collection.children[0].data;
-      // 'SK_svgData = \'';
-      // '\n  SK_svgData = \'';
-      if (svgScript.indexOf('SK_svgData = \'') > -1) {
-        var startIndex = svgScript.indexOf('SK_svgData = \'') + 14;
-        var endIndex = svgScript.indexOf(';', startIndex) - 1;
-        var svgData = svgScript.substring(startIndex, endIndex);
-        var svg = eval('"' + svgData + '"');
-        result.push(svg);
-      }
-    }
-    if (collection.children) {
-      result = result.concat(recurse(collection.children));
-    }
-  }
-  return result;
-};
+var traverse = require('./htmlTraverser');
 
 module.exports = {
-  // async function to returns a promise
+  // returns a promise that when resolved gives the raw html from a url
   getHtml: function (url) {
     return rp(url);
   },
 
+  // takes a string of raw html
+  // converts it to a collection using htmlparser
+  // and traverses the collection and gets the SVG elements from it using the htmlTraverser
+  // returns array of SVGs
+  // not async so simply returns result
   convert: function (rawHtml) {
     var dom = htmlparser.parseDOM(rawHtml);
-    return recurse(dom);
+    return traverse(dom);
   },
 
-  // async function so returns a promise
-  get: function (url) {
+  // takes a URL
+  // returns a promise that when resolves gives an array of the SVGs on that URL location
+  getSVGs: function (url) {
     return new Promise(function (resolve, reject) {
       return module.exports.getHtml(url)
       .then(function (rawHtml) {
