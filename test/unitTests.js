@@ -4,15 +4,20 @@ var downloader = require('../index.js');
 describe('the google slides downloader', function () {
 
     it('should have a get method', function (){
-      googleSlidesDownloader.get.should.be.a('function');
+      console.log(downloader);
+      downloader.getHtml.should.be.a('function');
+      downloader.convert.should.be.a('function');
+      downloader.getSvg.should.be.a('function');
     });
 
     it('should return an array of SVGs from the attached raw Google html', function () {
       var url = 'https://docs.google.com/presentation/d/1HsdP94BUaT2xCV3vjvu-3O9fiFfnTrNyKYRQTBUWnYY/embed';
 
+      return Promise.resolve(downloader.getSVGs(url)).should.eventually.be.instanceof(Array);
+
       downloader.getHtml(url)
       .then(function (html) {
-        
+
       });
 
     //   fs.readFile('./google-raw.html', 'utf8', function (err, doc) {
@@ -24,6 +29,7 @@ describe('the google slides downloader', function () {
     //     console.log(startString);
     //     result[0].substr(0, 4).should.equal('<s>');
     //   });
-    // });
+
+    });
 
 });
