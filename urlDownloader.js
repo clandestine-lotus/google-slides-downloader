@@ -4,17 +4,27 @@ var fs = require('fs');
 
 var url = 'https://docs.google.com/presentation/d/1n0SGmbgLATN0bj-K_oEerH0BaFb4HrzSGGIo5u7XyZE/embed';
 
-downloader.getHtml(url)
-.then(function (body) {
-  console.log(body);
-  var result = downloader.convert(body);
-  console.log(result);
-  result.forEach(function (el, i) {
+downloader.get(url)
+.then(function (arr) {
+  console.log(arr);
+  arr.forEach(function (el, i) {
     fs.writeFile('slide' + i + '.svg', el, function () {
       console.log('saved');
     });
   });
 });
+
+// downloader.getHtml(url)
+// .then(function (body) {
+//   console.log(body);
+//   var result = downloader.convert(body);
+//   console.log(result);
+//   result.forEach(function (el, i) {
+//     fs.writeFile('slide' + i + '.svg', el, function () {
+//       console.log('saved');
+//     });
+//   });
+// });
 
 // exports = function (url) {
 //   return rp(url);

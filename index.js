@@ -42,8 +42,9 @@ module.exports = {
   // async function so returns a promise
   get: function (url) {
     return new Promise(function (resolve, reject) {
-      return rp(url)
-      .then(function (result) {
+      return module.exports.getHtml(url)
+      .then(function (rawHtml) {
+        var result = module.exports.convert(rawHtml);
         resolve(result);
       })
       .catch(function (error) {
