@@ -1,32 +1,35 @@
-var fs = require('fs');
+var rp = require('request-promise');
 var htmlparser = require("htmlparser2");
-var _ = require('underscore');
+var traverse = require('./htmlTraverser');
 
-var recurse = function (collection) {
-  var result = [];
-  if (Array.isArray(collection)) {
-    _.each(collection, function (element) {
-      result = result.concat(recurse(element));
+module.exports = {
+  // returns a promise that when resolved gives the raw html from a url
+  getHtml: function (url) {
+    return rp(url);
+  },
+
+  // takes a string of raw html
+  // converts it to a collection using htmlparser
+  // and traverses the collection and gets the SVG elements from it using the htmlTraverser
+  // returns array of SVGs
+  // not async so simply returns result
+  convert: function (rawHtml) {
+    var dom = htmlparser.parseDOM(rawHtml);
+    return traverse(dom);
+  },
+
+  // takes a URL
+  // returns a promise that when resolves gives an array of the SVGs on that URL location
+  getSVGs: function (url) {
+    return new Promise(function (resolve, reject) {
+      return module.exports.getHtml(url)
+      .then(function (rawHtml) {
+        var result = module.exports.convert(rawHtml);
+        resolve(result);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
     });
-  } else {
-    if (collection.type === 'script' && collection.children[0] && collection.children[0].data) {
-      var svgScript = collection.children[0].data;
-      if (svgScript.indexOf('\n  SK_svgData = \'') > -1) {
-        var startIndex = svgScript.indexOf('\n  SK_svgData = \'') + 17;
-        var endIndex = svgScript.indexOf(';', startIndex) - 1;
-        var svgData = svgScript.substring(startIndex, endIndex);
-        var svg = eval('"' + svgData + '"');
-        result.push(svg);
-      }
-    }
-    if (collection.children) {
-      result = result.concat(recurse(collection.children));
-    }
   }
-  return result;
 };
-
-exports.get = function (googleOutput) {
-  var dom = htmlparser.parseDOM(googleOutput);
-  return recurse(dom);
-}

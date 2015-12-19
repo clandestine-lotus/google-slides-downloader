@@ -1,23 +1,25 @@
 {
   "name": "google-slides-downloader",
-  "version": "1.0.2",
-  "description": "Takes raw html from Google Slides embedded presentation and outputs array with an SVG for each slide",
+  "version": "1.0.3",
+  "description": "Takes the embed URL for a Google Slides presentation and outputs array with an SVG for each slide",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/unitTests.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bjarkestaun/google-slides-downloader.git"
+    "url": "https://github.com/clandestine-lotus/google-slides-downloader.git"
   },
   "author": "Clandestine Lotus",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bjarkestaun/google-slides-downloader/issues"
+    "url": "https://github.com/clandestine-lotus/google-slides-downloader/issues"
   },
-  "homepage": "https://github.com/bjarkestaun/google-slides-downloader#readme",
+  "homepage": "https://github.com/clandestine-lotus/google-slides-downloader#readme",
   "dependencies": {
+    "chai-as-promised": "^5.1.0",
     "htmlparser2": "^3.9.0",
+    "request-promise": "^1.0.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
